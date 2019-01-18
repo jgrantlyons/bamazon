@@ -4,3 +4,4 @@ https://i.gyazo.com/668d5ff1a257c61d03a140556fc18689.gif
 
 still need to fill out the rest of the database - i changed my password a while back during a class assignment (to 'password') and didn't remember what i had set it to... so, i restarted mysql workbench and lost all my databases :(
 
+oh yeah, also i was practicing hiding files with .gitignore .env and a keys.js file. They're there... just trust me

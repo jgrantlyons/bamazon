@@ -2,7 +2,6 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
 var connection = mysql.createConnection({
     host: "localhost",
 
@@ -13,7 +12,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "password",
+    password: keys.sql.psd,
     database: "Bamazon"
 });
 
@@ -103,7 +102,7 @@ function carrotSearch() {
             type: "input",
             message: "What quantity would you like to buy?"
         }).then(function (answer) {
-            var query = "SELECT stock_quantity FROM products WHERE item_id=1";
+            var query = "SELECT stock_quantity FROM products WHERE id=1";
             let inCart = answer.action;
 
             connection.query(query, function (err, result, fields) {
@@ -115,17 +114,17 @@ function carrotSearch() {
                     console.log("Insufficient quantity!");
                 } else {
                     let newQuantity = quantity - inCart;
-                    var sql = "UPDATE products SET stock_quantity="+newQuantity+" WHERE item_id = 1";
+                    var sql = "UPDATE products SET stock_quantity="+newQuantity+" WHERE id = 1";
                     connection.query(sql, function (err, result) {
                         if (err) throw err;
                         let productCost;
                         let totalCost;
                         function productCostFinder(){
-                            var query = "SELECT price FROM products WHERE item_id = 2";
+                            var query = "SELECT price FROM products WHERE id = 1";
                             connection.query(query, function(err, result){
                                 if (err) throw err;
                                 productCost = result[0].price;
-                                totalCost = productCost*quantity;
+                                totalCost = productCost*inCart;
                                 console.log("your total cost is: "+totalCost);
                             });
                         };
@@ -133,15 +132,6 @@ function carrotSearch() {
                     });
 
                 };
-
-                // if(answer>quantity){
-                //     console.log("Insufficient quantity!")
-                // }else{
-                //     console.log("sounds good!")
-                //     let newQuantity = quantity - answer;
-                //     console.log(newQuantity);
-                // };
-
             });
 
 
